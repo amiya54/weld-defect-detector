@@ -1,6 +1,9 @@
 MIT License
 
-Copyright (c) 2026 amiya54
+本项目（detect.py 及配套文档）为对 RH821/ship-ai-system 焊缝外观模块的
+工程化重构版本，原项目代码采用 MIT 许可，特此保留原始声明。
+
+Copyright (c) 2025 RH821
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -19,3 +22,9 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+-------------------------------------------------------------------------------
+
+注意：模型权重（weights/*.pt）及示例数据由原作者在其船厂数据集上训练/制作，
+原仓库声明其"受各自协议约束"但未明确具体条款。本重构版本随附权重仅供
+个人学习与原型验证使用；任何商业使用请先与原作者确认授权。
