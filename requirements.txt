@@ -1,10 +1,11 @@
 # 焊缝外观缺陷检测依赖
 # Python >= 3.9
 #
-# 说明：torch 安装方式请按你的机器选择：
-#   CPU 版：pip install torch --index-url https://download.pytorch.org/whl/cpu
+# 说明：torch / torchvision 必须版本配套，且建议一起装，否则会报
+#   RuntimeError: operator torchvision::nms does not exist
+#   CPU 版：pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
 #   GPU 版：见 https://pytorch.org/get-started 选择对应 CUDA 版本
-# 若系统已有可用 torch，下面这条会跳过重复安装。
+# 若系统已有可用 torch 且配套 torchvision，可跳过。
 
 ultralytics>=8.0.0
 opencv-python>=4.5
