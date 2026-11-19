@@ -1,21 +1,21 @@
 {
   "total_images": 4,
-  "total_detections": 31,
+  "total_detections": 1,
   "items": [
     {
-      "image": "我的照片/test_lohi_weld.jpg",
-      "n_detections": 16
-    },
-    {
-      "image": "我的照片/test_pcs_weld.jpg",
-      "n_detections": 15
-    },
-    {
-      "image": "我的照片/test_xray_airhole.jpg",
+      "image": "我的照片/real_weld_01.jpg",
       "n_detections": 0
     },
     {
-      "image": "我的照片/test_xray_bite.jpg",
+      "image": "我的照片/real_weld_02.jpg",
+      "n_detections": 0
+    },
+    {
+      "image": "我的照片/real_weld_03.jpg",
+      "n_detections": 1
+    },
+    {
+      "image": "我的照片/real_weld_04.jpg",
       "n_detections": 0
     }
   ]

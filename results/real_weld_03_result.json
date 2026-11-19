@@ -1,0 +1,30 @@
+{
+  "task": "weld_defect",
+  "source": "我的照片/real_weld_03.jpg",
+  "timestamp": "2026-11-19T06:58:18",
+  "params": {
+    "conf": 0.25,
+    "overrate": 0.0,
+    "normalize_tiles": true
+  },
+  "result": {
+    "image_size": [
+      1280,
+      1280
+    ],
+    "n_detections": 1,
+    "detections": [
+      {
+        "bbox_xyxy": [
+          484.1173231601715,
+          623.2813944816589,
+          550.6410827636719,
+          668.2349629402161
+        ],
+        "category": "overlap",
+        "category_zh": "未熔合",
+        "score": 0.4938073754310608
+      }
+    ]
+  }
+}

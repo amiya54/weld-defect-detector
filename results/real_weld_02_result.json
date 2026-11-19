@@ -1,7 +1,7 @@
 {
   "task": "weld_defect",
-  "source": "我的照片/test_xray_airhole.jpg",
-  "timestamp": "2026-11-19T06:39:16",
+  "source": "我的照片/real_weld_02.jpg",
+  "timestamp": "2026-11-19T06:58:17",
   "params": {
     "conf": 0.25,
     "overrate": 0.0,
@@ -9,8 +9,8 @@
   },
   "result": {
     "image_size": [
-      958,
-      653
+      1280,
+      1280
     ],
     "n_detections": 0,
     "detections": []
