@@ -4,7 +4,20 @@
 
 基于 [RH821/ship-ai-system](https://github.com/RH821/ship-ai-system) 的焊缝外观模块重构而来，原算法逻辑保持不变，仅做了工程化清理（移除硬编码路径与未解决的合并冲突、参数化输入输出）。原项目代码为 MIT 许可，模型权重的许可请见文末说明。
 
-## 最快上手：双击运行（Windows，不用敲命令）
+## ☁️ 最快上手：GitHub 云端运行（完全不用装环境，推荐）
+
+**不用装 Python、不用装 PyTorch、不用敲任何命令**——全在 GitHub 服务器上跑，跑完点开网页看结果。
+
+1. 打开仓库页面，进入 `我的照片` 文件夹，点 `Add file` → `Upload files`，上传**脱敏后**的焊缝照片（船名/分段号/日期水印先裁掉），提交。
+2. 上传后云端会**自动开始检测**（也可到 `Actions` 页手动点 `Run workflow`，能调参数或选内置示例）。
+3. 等 3–8 分钟，回到仓库 `results` 文件夹，点开 **`报告.md`** —— 每张图的画框结果、缺陷类别、置信度、坐标全在里面，图片直接显示。
+4. 同样在 `Actions` 页该次运行底部可下载 `检测结果` 压缩包（含全部结果图和 JSON）。
+
+> 想先看看效果、不传自己的照片：到 `Actions` → `云端焊缝检测` → `Run workflow` → 模式选 `sample` → 运行，看 `results/报告.md` 即可。
+>
+> ⚠️ 云端方案会把照片上传到 GitHub。仓库是公开的，**务必只传脱敏照片**；若要传含敏感信息的图，请先把仓库改成 Private（`Settings` → `Change visibility`），Actions 私有仓库也有免费额度。
+
+## 最快上手：本地双击运行（Windows，自己有 Python 环境时）
 
 1. 确认电脑装了 **Python 3.10 或 3.11**（安装时勾选 "Add Python to PATH"）
 2. 把整个项目文件夹下载/解压到本地
@@ -147,14 +160,18 @@ python detect.py -i samples/demo.jpg -o outputs \
 
 ```
 weld-defect-detector/
-├── detect.py                  # 主程序（命令行入口）
-├── requirements.txt           # 依赖
+├── detect.py                  # 主程序（命令行入口，本地/云端共用）
+├── make_report.py             # 云端报告生成器（JSON → 网页报告）
+├── .github/workflows/
+│   └── cloud-detect.yml       # 云端自动检测工作流
+├── 我的照片/                  # 把脱敏照片传到这里，自动触发云端检测
 ├── samples/                   # 示例图 + 预期结果图
 ├── weights/                   # 三个模型权重
 │   ├── weld_area.pt           # 阶段一：焊缝区域定位（5.4MB）
 │   ├── liangdutongyi.pt       # 阶段二：缺陷检测（19MB）
 │   └── best.pt                # 原项目附带权重（本脚本未用到，保留备查）
-└── outputs/                   # 运行结果（运行时自动生成）
+├── outputs/                   # 本地运行结果
+└── results/                   # 云端运行结果（含 报告.md，自动提交回仓库）
 ```
 
 ## 关于权重与许可
