@@ -1,0 +1,106 @@
+name: 云端焊缝检测（免安装）
+
+# 两种触发方式：
+#   1. 在网页上把脱敏照片上传到「我的照片」文件夹 -> 自动检测
+#   2. 到 Actions 页面点「Run workflow」-> 可跑内置示例或调参数
+on:
+  push:
+    paths:
+      - '我的照片/**'
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: '检测模式：photos=我上传的照片，sample=内置示例图'
+        required: true
+        default: 'photos'
+        type: choice
+        options:
+          - photos
+          - sample
+      conf:
+        description: '置信度阈值：调低更敏感（多报），调高更保守（少报）'
+        required: false
+        default: '0.25'
+      overrate:
+        description: '瓦片重叠率：长焊缝怕漏检可填 0.2'
+        required: false
+        default: '0.0'
+
+# 允许把检测结果提交回仓库（这样能在网页直接看图）
+permissions:
+  contents: write
+
+jobs:
+  detect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: 检出代码与权重
+        uses: actions/checkout@v4
+
+      - name: 安装 Python 3.10
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: 安装依赖
+        run: |
+          python -m pip install --upgrade pip
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
+          pip install "ultralytics>=8.0.0" "opencv-python-headless>=4.5" "numpy>=1.24"
+
+      - name: 准备输入与输出目录
+        id: prep
+        run: |
+          mkdir -p results
+          rm -f results/*.jpg results/*.json results/*.md
+          if [ "${{ github.event_name }}" = "push" ]; then
+            MODE="photos"
+          else
+            MODE="${{ inputs.mode }}"
+          fi
+          if [ "$MODE" = "photos" ]; then
+            N=$(find "我的照片" -maxdepth 1 -type f \( -iname '*.jpg' -o -iname '*.jpeg' -o -iname '*.png' -o -iname '*.bmp' \) 2>/dev/null | wc -l)
+            if [ "$N" -eq 0 ]; then
+              echo "::error::「我的照片」文件夹里没有图片。请先上传脱敏照片，或改用 sample 模式。"
+              exit 1
+            fi
+            echo "将检测 $N 张上传的照片"
+            echo "input=我的照片" >> "$GITHUB_OUTPUT"
+          else
+            echo "将检测内置示例图 samples/demo.jpg"
+            echo "input=samples/demo.jpg" >> "$GITHUB_OUTPUT"
+          fi
+          CONF="${{ inputs.conf }}"; [ -z "$CONF" ] && CONF="0.25"
+          OVERRATE="${{ inputs.overrate }}"; [ -z "$OVERRATE" ] && OVERRATE="0.0"
+          echo "conf=$CONF" >> "$GITHUB_OUTPUT"
+          echo "overrate=$OVERRATE" >> "$GITHUB_OUTPUT"
+
+      - name: 运行检测
+        run: |
+          python detect.py -i "${{ steps.prep.outputs.input }}" -o results \
+            --conf "${{ steps.prep.outputs.conf }}" \
+            --overrate "${{ steps.prep.outputs.overrate }}" \
+            --device cpu
+
+      - name: 生成网页报告
+        run: python make_report.py
+
+      - name: 打包结果为下载链接
+        uses: actions/upload-artifact@v4
+        with:
+          name: 检测结果
+          path: results/
+          retention-days: 30
+
+      - name: 把结果提交回仓库
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f results/
+          if ! git diff --cached --quiet; then
+            git commit -m "云端检测完成 $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            git push
+          else
+            echo "结果无变化，跳过提交"
+          fi
