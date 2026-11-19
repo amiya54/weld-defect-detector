@@ -1,10 +1,22 @@
 {
-  "total_images": 1,
-  "total_detections": 3,
+  "total_images": 4,
+  "total_detections": 31,
   "items": [
     {
-      "image": "samples/demo.jpg",
-      "n_detections": 3
+      "image": "我的照片/test_lohi_weld.jpg",
+      "n_detections": 16
+    },
+    {
+      "image": "我的照片/test_pcs_weld.jpg",
+      "n_detections": 15
+    },
+    {
+      "image": "我的照片/test_xray_airhole.jpg",
+      "n_detections": 0
+    },
+    {
+      "image": "我的照片/test_xray_bite.jpg",
+      "n_detections": 0
     }
   ]
 }
