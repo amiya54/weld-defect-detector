@@ -1,0 +1,52 @@
+{
+  "task": "weld_defect",
+  "source": "samples/demo.jpg",
+  "timestamp": "2026-11-19T06:11:17",
+  "params": {
+    "conf": 0.25,
+    "overrate": 0.0,
+    "normalize_tiles": true
+  },
+  "result": {
+    "image_size": [
+      1706,
+      1279
+    ],
+    "n_detections": 3,
+    "detections": [
+      {
+        "bbox_xyxy": [
+          465.24309167861935,
+          644.3997581005096,
+          486.3674353599548,
+          669.3705607891083
+        ],
+        "category": "porosity",
+        "category_zh": "气孔",
+        "score": 0.7495929002761841
+      },
+      {
+        "bbox_xyxy": [
+          761.2199554920196,
+          636.7046003341675,
+          771.8532723903655,
+          648.768518447876
+        ],
+        "category": "porosity",
+        "category_zh": "气孔",
+        "score": 0.2723582088947296
+      },
+      {
+        "bbox_xyxy": [
+          1024.7499885559082,
+          628.7205877780914,
+          1040.9520604133606,
+          644.0553779602051
+        ],
+        "category": "porosity",
+        "category_zh": "气孔",
+        "score": 0.5188485383987427
+      }
+    ]
+  }
+}

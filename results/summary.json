@@ -1,0 +1,10 @@
+{
+  "total_images": 1,
+  "total_detections": 3,
+  "items": [
+    {
+      "image": "samples/demo.jpg",
+      "n_detections": 3
+    }
+  ]
+}
